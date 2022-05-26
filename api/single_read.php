@@ -6,30 +6,30 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     include_once '../config/database.php';
-    include_once '../class/employees.php';
+    include_once '../class/recetas.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $item = new Employee($db);
+    $receta = new Receta($db);
 
-    $item->id = isset($_GET['id']) ? $_GET['id'] : die();
+    $receta->id = isset($_GET['id']) ? $_GET['id'] : die();
   
-    $item->getSingleEmployee();
+    $receta->getReceta();
 
-    if($item->name != null){
+    if($receta->titulo != null){
         // create array
-        $emp_arr = array(
-            "id" =>  $item->id,
-            "name" => $item->name,
-            "email" => $item->email,
-            "age" => $item->age,
-            "designation" => $item->designation,
-            "created" => $item->created
+        $receta_detalles = array(
+            "id" => $receta->id,
+            "titulo" => $receta->titulo,
+            "descripcion" => $receta->descripcion,
+            "imagen" => $receta->imagen,
         );
       
+        if ($receta->ingredientes != null) $receta_detalles["ingredientes"] = $receta->ingredientes;
+
         http_response_code(200);
-        echo json_encode($emp_arr);
+        echo json_encode($receta_detalles);
     }
       
     else{

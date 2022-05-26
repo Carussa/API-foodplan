@@ -24,23 +24,11 @@
 
         while ($fila = mysqli_fetch_assoc($recetas)){
             extract($fila);
-
-            $ingredientes = $items->getIngredientesReceta($idreceta);
-            $listaIngredientes = array();
-
-            if ($ingredientes) {
-                while ($filaIngredientes = mysqli_fetch_assoc($ingredientes)){
-                    extract($filaIngredientes);
-                    array_push($listaIngredientes, $nombre);
-                }
-            }
-
+            
             $receta = array(
                 "id" => $idreceta,
                 "titulo" => $titulo,
-                "descripcion" => $descripcion,
                 "imagen" => $imagen,
-                "ingredientes" => $listaIngredientes,
             );
 
             array_push($listaRecetas["body"], $receta);
