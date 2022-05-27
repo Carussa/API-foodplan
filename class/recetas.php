@@ -48,7 +48,7 @@
 
 
         public function getIngredientesReceta(){
-            $consulta = "SELECT nombre FROM " . $this->db_table_3 . " a INNER JOIN " . $this->db_table_2 . " b WHERE b.idreceta = " . $this->id ." and a.idingrediente = b.idingrediente";
+            $consulta = "SELECT a.idingrediente, a.cantidad, b.nombre FROM " . $this->db_table_2 . " a INNER JOIN " . $this->db_table_3 . " b WHERE a.idreceta = " . $this->id ." and a.idingrediente = b.idingrediente";
            
             $resultado = mysqli_query($this->connection, $consulta); 
 
@@ -56,7 +56,12 @@
                 $this->ingredientes = [];
                 while ($fila = mysqli_fetch_assoc($resultado)){
                     extract($fila);
-                    array_push($this->ingredientes, $nombre);
+                    // $ingrediento = new ingredientereceta(id, idreceta, nombre, cantidad)
+                    array_push($this->ingredientes, array(
+                        "id" => $idingrediente,
+                        "nombre" => $nombre,
+                        "cantidad" => $cantidad,
+                    ));
                 }
             }
         }
