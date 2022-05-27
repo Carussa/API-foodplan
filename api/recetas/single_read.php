@@ -27,8 +27,8 @@
             "imagen" => $receta->imagen,
         );
 
-        $items = new IngredienteReceta($db, $receta->id);
-        $ingredientes = $items->getIngredientesReceta();
+        $items = new IngredienteReceta($db);
+        $ingredientes = $items->getIngredientesReceta($receta->id);
 
        // $itemCount = mysqli_num_rows($ingredientes);
 

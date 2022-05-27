@@ -31,6 +31,8 @@
                 return $resultado;
             }
         }
+
+       
         
         public function getReceta(){
             $consulta = "SELECT titulo, descripcion, imagen FROM " . $this->db_table . " WHERE idreceta = " . $this->id . "";
@@ -45,6 +47,22 @@
             }
         }        
 
+        // CREATE
+        public function createReceta(){
+            // sanitize
+            $this->titulo = htmlspecialchars(strip_tags($this->titulo));
+            $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
+            $this->imagen = htmlspecialchars(strip_tags($this->imagen));
+
+            $consulta = "INSERT INTO ". $this->db_table ." (titulo, descripcion, imagen) VALUES ('$this->titulo', '$this->descripcion', '$this->imagen') ";
+           
+            $resultado = mysqli_query($this->connection, $consulta);
+
+            if ($resultado) {
+                $this->id = mysqli_insert_id($this->connection);
+            }
+            return $resultado;
+        }
     }
 ?>
 
