@@ -5,9 +5,9 @@
         private $connection;
 
         // Table
-        private $db_table_1 = "recetas";
-        private $db_table_2 = "ingredientes_receta";
-        private $db_table_3 = "ingredientes";
+        private $db_table = "recetas";
+        private $db_table_IR = "ingredientes_receta";
+        private $db_table_I = "ingredientes";
 
         // Columns
         public $id;
@@ -23,7 +23,7 @@
 
         // GET ALL
         public function getRecetas(){
-            $consulta = "SELECT idreceta, titulo, imagen FROM " . $this->db_table_1 . "";
+            $consulta = "SELECT idreceta, titulo, imagen FROM " . $this->db_table . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) > 0) {
@@ -31,9 +31,9 @@
                 return $resultado;
             }
         }
-
+        
         public function getReceta(){
-            $consulta = "SELECT titulo, descripcion, imagen FROM " . $this->db_table_1 . " WHERE idreceta = " . $this->id . "";
+            $consulta = "SELECT titulo, descripcion, imagen FROM " . $this->db_table . " WHERE idreceta = " . $this->id . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) == 1) {
@@ -42,29 +42,8 @@
                 $this->titulo = $receta['titulo'];
                 $this->descripcion = $receta['descripcion'];
                 $this->imagen = $receta['imagen'];
-                $this->getIngredientesReceta();
             }
         }        
-
-
-        public function getIngredientesReceta(){
-            $consulta = "SELECT a.idingrediente, a.cantidad, b.nombre FROM " . $this->db_table_2 . " a INNER JOIN " . $this->db_table_3 . " b WHERE a.idreceta = " . $this->id ." and a.idingrediente = b.idingrediente";
-           
-            $resultado = mysqli_query($this->connection, $consulta); 
-
-            if (mysqli_num_rows($resultado) > 0) {
-                $this->ingredientes = [];
-                while ($fila = mysqli_fetch_assoc($resultado)){
-                    extract($fila);
-                    // $ingrediento = new ingredientereceta(id, idreceta, nombre, cantidad)
-                    array_push($this->ingredientes, array(
-                        "id" => $idingrediente,
-                        "nombre" => $nombre,
-                        "cantidad" => $cantidad,
-                    ));
-                }
-            }
-        }
 
     }
 ?>

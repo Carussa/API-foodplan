@@ -7,6 +7,7 @@
 
     include_once '../../config/database.php';
     include_once '../../class/recetas.php';
+    include_once '../../class/ingredientesreceta.php';
 
     $database = new Database();
     $db = $database->getConnection();
@@ -14,7 +15,7 @@
     $receta = new Receta($db);
 
     $receta->id = isset($_GET['id']) ? $_GET['id'] : die();
-  
+
     $receta->getReceta();
 
     if($receta->titulo != null){
@@ -25,6 +26,28 @@
             "descripcion" => $receta->descripcion,
             "imagen" => $receta->imagen,
         );
+
+        $items = new IngredienteReceta($db, $receta->id);
+        $ingredientes = $items->getIngredientesReceta();
+
+       // $itemCount = mysqli_num_rows($ingredientes);
+
+        if($ingredientes != null){
+        
+            $listaIngredientes = array();
+    
+            while ($fila = mysqli_fetch_assoc($ingredientes)){
+                extract($fila);
+                
+                array_push($listaIngredientes, array(
+                    "id" => $idingrediente,
+                    "nombre" => $nombre,
+                    "cantidad" => $cantidad,
+                ));
+            }
+
+            $receta->ingredientes = $listaIngredientes;
+        }    
       
         if ($receta->ingredientes != null) $receta_detalles["ingredientes"] = $receta->ingredientes;
 
