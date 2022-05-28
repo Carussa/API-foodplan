@@ -52,5 +52,13 @@
             
             }
         }
+
+        public function removeIngredientes($idreceta){
+            $consulta = "DELETE FROM " . $this->db_table_IR . " WHERE idreceta = ". $idreceta. "";
+            
+            $resultado = mysqli_query($this->connection, $consulta);
+            
+            return $resultado;
+        }
     }
 ?>

@@ -33,7 +33,7 @@
         }
 
        
-        
+        // GET SINGLE
         public function getReceta(){
             $consulta = "SELECT titulo, descripcion, imagen FROM " . $this->db_table . " WHERE idreceta = " . $this->id . "";
             $resultado = mysqli_query($this->connection, $consulta);
@@ -61,6 +61,17 @@
             if ($resultado) {
                 $this->id = mysqli_insert_id($this->connection);
             }
+            return $resultado;
+        }
+
+        // DELETE
+        public function deleteReceta(){
+            $this->id = htmlspecialchars(strip_tags($this->id));
+
+            $consulta = "DELETE FROM " . $this->db_table . " WHERE idreceta = ". $this->id . "";
+            
+            $resultado = mysqli_query($this->connection, $consulta);
+            
             return $resultado;
         }
     }
