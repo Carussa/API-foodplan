@@ -32,29 +32,26 @@
         }
 
         public function addIngredientesReceta($receta){
-             // sanitize
-             /*$this->titulo = htmlspecialchars(strip_tags($this->titulo));
-             $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
-             $this->imagen = htmlspecialchars(strip_tags($this->imagen));*/
+            
             $ingredientesValues= array();
-
+            
             foreach($receta->ingredientes as $ingrediente){
-                $ingredientesValues[] = "(" .$receta->id. ", " . $ingrediente['id'] . ", '" . $ingrediente['cantidad'] . "')";
+                $ingredientesValues[] = "(" .$receta->id. ", " . $ingrediente->id . ", '" . $ingrediente->cantidad . "')";
             }
 
             if(!empty($ingredientesValues)){
-            $stringValues = implode(", ", $ingredientesValues);
-            
-            $consulta = "INSERT INTO " . $this->db_table_IR . " (idreceta, idingrediente, cantidad) VALUES $stringValues";
-            $resultado = mysqli_query($this->connection, $consulta);
- 
-            return $resultado;
-            
+                $stringValues = implode(", ", $ingredientesValues);
+                
+                $consulta = "INSERT INTO " . $this->db_table_IR . " (idreceta, idingrediente, cantidad) VALUES $stringValues";
+                $resultado = mysqli_query($this->connection, $consulta);
+    
+                return $resultado;
             }
         }
 
-        public function removeIngredientes($idreceta){
-            $consulta = "DELETE FROM " . $this->db_table_IR . " WHERE idreceta = ". $idreceta. "";
+        //sin probar
+        public function removeIngrediente($idreceta){
+            $consulta = "DELETE FROM " . $this->db_table_IR . " WHERE idreceta = ". $idreceta. " AND idingrediente = " . $this->id . "";
             
             $resultado = mysqli_query($this->connection, $consulta);
             

@@ -14,6 +14,7 @@
         public $titulo;
         public $descripcion;
         public $imagen;
+        public $idusuario;
         public $ingredientes;
 
         // Db connection
@@ -47,14 +48,32 @@
             }
         }        
 
+        // UPDATE
+        public function updateReceta(){
+            // sanitize
+            $this->titulo = htmlspecialchars(strip_tags($this->titulo));
+            $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
+            $this->imagen = htmlspecialchars(strip_tags($this->imagen));
+
+            $consulta = "UPDATE ". $this->db_table ." SET titulo = '$this->titulo', descripcion = '$this->descripcion', imagen = '$this->imagen' WHERE idreceta = $this->id";
+
+            $resultado = mysqli_query($this->connection, $consulta);
+
+            if ($resultado) {
+                $this->id = mysqli_insert_id($this->connection);
+            }
+            return $resultado;
+        }
+
         // CREATE
         public function createReceta(){
             // sanitize
             $this->titulo = htmlspecialchars(strip_tags($this->titulo));
             $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
             $this->imagen = htmlspecialchars(strip_tags($this->imagen));
+            $this->idusuario = htmlspecialchars(strip_tags($this->idusuario));
 
-            $consulta = "INSERT INTO ". $this->db_table ." (titulo, descripcion, imagen) VALUES ('$this->titulo', '$this->descripcion', '$this->imagen') ";
+            $consulta = "INSERT INTO ". $this->db_table ." (titulo, descripcion, imagen, idusuario) VALUES ('$this->titulo', '$this->descripcion', '$this->imagen', '$this->idusuario') ";
            
             $resultado = mysqli_query($this->connection, $consulta);
 

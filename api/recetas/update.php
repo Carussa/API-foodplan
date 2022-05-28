@@ -7,7 +7,6 @@
     
     include_once '../../config/database.php';
     include_once '../../class/recetas.php';
-   // include_once '../../class/ingredientesreceta.php';
     
     $database = new Database();
     $db = $database->getConnection();
@@ -17,13 +16,13 @@
     $data = json_decode(file_get_contents("php://input"));
     
     $receta->id = $data->id;
+    $receta->titulo = $data->titulo;
+    $receta->descripcion = $data->descripcion;
+    $receta->imagen = $data->imagen;
     
-    //$ingredientes = new IngredienteReceta($db);
-
-    //if($receta->deleteReceta() && $ingredientes->removeIngredientes($receta->id)){
-    if($receta->deleteReceta() ){
-        echo json_encode("Receta deleted.");
+    if($receta->updateReceta()){
+        echo json_encode("Receta data updated.");
     } else{
-        echo json_encode("Receta could not be deleted");
+        echo json_encode("Receta could not be updated");
     }
 ?>

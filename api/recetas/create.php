@@ -19,6 +19,7 @@
     $receta->titulo = $data->titulo;
     $receta->descripción = $data->descripcion;
     $receta->imagen = $data->imagen;
+    $receta->idusuario = $data->idusuario;
     //$receta->ingredientes = $data->ingredientes;
     
     if(!empty($receta->titulo)){
@@ -29,7 +30,8 @@
         }
     }
 
-    $receta->ingredientes = json_decode('[{"id":"2","cantidad":null},{"id":"3","cantidad":"1"},{"id":"4","cantidad":"1"},{"id":"6","cantidad":"4"}]',true);
+    //$receta->ingredientes = json_decode('[{"id":"2","cantidad":null},{"id":"3","cantidad":"1"},{"id":"4","cantidad":"1"},{"id":"6","cantidad":"4"}]',true);
+    $receta->ingredientes =  $data->ingredientes;
     
     $ingredientes = new IngredienteReceta($db);
     if($ingredientes->addIngredientesReceta($receta)){

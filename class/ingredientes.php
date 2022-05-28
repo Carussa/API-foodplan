@@ -49,7 +49,6 @@
             $this->imagen = htmlspecialchars(strip_tags($this->imagen));
 
             $consulta = "UPDATE ". $this->db_table ." SET nombre = '$this->nombre', imagen = '$this->imagen' WHERE idingrediente = $this->id";
-        echo $consulta;
             
             $resultado = mysqli_query($this->connection, $consulta);
             
