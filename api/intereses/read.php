@@ -3,37 +3,36 @@
     header("Content-Type: application/json; charset=UTF-8");
     
     include_once '../../config/database.php';
-    include_once '../../class/recetas.php';
+    include_once '../../class/intereses.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $items = new Receta($db);
+    $items = new Interes($db);
 
-    $recetas = $items->getRecetas();
-    $itemCount = mysqli_num_rows($recetas);
+    $intereses = $items->getIntereses();
+    $itemCount = mysqli_num_rows($intereses);
 
 
    // echo json_encode($itemCount);
 
     if($itemCount > 0){
         
-        $listaRecetas = array();
-        $listaRecetas["body"] = array();
-        $listaRecetas["itemCount"] = $itemCount;
+        $listaIntereses = array();
+        $listaIntereses["body"] = array();
+        $listaIntereses["itemCount"] = $itemCount;
 
-        while ($fila = mysqli_fetch_assoc($recetas)){
+        while ($fila = mysqli_fetch_assoc($intereses)){
             extract($fila);
             
             $receta = array(
-                "id" => $idreceta,
-                "titulo" => $titulo,
-                "imagen" => $imagen,
+                "id" => $idinteres,
+                "interes" => $interes,
             );
 
-            array_push($listaRecetas["body"], $receta);
+            array_push($listaIntereses["body"], $receta);
         }
-        echo json_encode($listaRecetas);
+        echo json_encode($listaIntereses);
     }
 
     else{

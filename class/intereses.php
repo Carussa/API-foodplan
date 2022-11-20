@@ -1,17 +1,15 @@
 <?php
-    class Ingrediente{
+    class Interes{
 
         // Connection
         private $connection;
 
         // Table
-        private $db_table = "ingredientes";
+        private $db_table = "intereses";
 
         // Columns
         public $id;
-        public $nombre;
-        public $categoria;
-        public $imagen;
+        public $interes;
 
         // Db connection
         public function __construct($db){
@@ -19,8 +17,8 @@
         }
 
         // GET ALL
-        public function getIngredientes(){
-            $consulta = "SELECT idingrediente, nombre, imagen FROM " . $this->db_table . "";
+        public function getIntereses(){
+            $consulta = "SELECT idinteres, interes FROM " . $this->db_table . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) > 0) {
@@ -31,24 +29,22 @@
 
        
         // GET SINGLE
-        public function getIngrediente(){
-            $consulta = "SELECT nombre, imagen FROM " . $this->db_table . " WHERE idingrediente = " . $this->id . "";
+        public function getInteres(){
+            $consulta = "SELECT interes FROM " . $this->db_table . " WHERE idinteres = " . $this->id . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) == 1) {
 
                 $receta = mysqli_fetch_assoc($resultado);
-                $this->nombre = $receta['nombre'];
-                $this->imagen = $receta['imagen'];
+                $this->interes = $receta['interes'];
             }
         }        
 
         // UPDATE
-        public function updateIngrediente(){
-            $this->nombre = htmlspecialchars(strip_tags($this->nombre));
-            $this->imagen = htmlspecialchars(strip_tags($this->imagen));
+        public function updateInteres(){
+            $this->interes = htmlspecialchars(strip_tags($this->interes));
 
-            $consulta = "UPDATE ". $this->db_table ." SET nombre = '$this->nombre', imagen = '$this->imagen' WHERE idingrediente = $this->id";
+            $consulta = "UPDATE ". $this->db_table ." SET interes = '$this->interes' WHERE idinteres = $this->id";
             
             $resultado = mysqli_query($this->connection, $consulta);
             
@@ -56,12 +52,12 @@
         }
 
         // CREATE
-        public function createIngrediente(){
+        public function createInteres(){
             // sanitize
-            $this->nombre = htmlspecialchars(strip_tags($this->nombre));
+            $this->interes = htmlspecialchars(strip_tags($this->interes));
             $this->imagen = htmlspecialchars(strip_tags($this->imagen));
 
-            $consulta = "INSERT INTO ". $this->db_table ." (nombre, imagen) VALUES ('$this->nombre', '$this->imagen') ";
+            $consulta = "INSERT INTO ". $this->db_table ." (interes) VALUES ('$this->interes') ";
            
             $resultado = mysqli_query($this->connection, $consulta);
 
@@ -72,10 +68,10 @@
         }
 
         // DELETE
-        public function deleteIngrediente(){
+        public function deleteInteres(){
             $this->id = htmlspecialchars(strip_tags($this->id));
 
-            $consulta = "DELETE FROM " . $this->db_table . " WHERE idingrediente = ". $this->id . "";
+            $consulta = "DELETE FROM " . $this->db_table . " WHERE idinteres = ". $this->id . "";
             //comprobar si está en uso o usar claves foráneas
             
             $resultado = mysqli_query($this->connection, $consulta);

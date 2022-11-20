@@ -6,23 +6,21 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     
     include_once '../../config/database.php';
-    include_once '../../class/recetas.php';
+    include_once '../../class/intereses.php';
     
     $database = new Database();
     $db = $database->getConnection();
     
-    $receta = new Receta($db);
+    $interes = new Interes($db);
     
     $data = json_decode(file_get_contents("php://input"));
     
-    $receta->id = $data->id;
-    $receta->titulo = $data->titulo;
-    $receta->descripcion = $data->descripcion;
-    $receta->imagen = $data->imagen;
-    
-    if($receta->updateReceta()){
-        echo json_encode("Receta data updated.");
+    $interes->id = $data->id;
+    $interes->interes = $data->interes;
+
+    if($interes->updateInteres()){
+        echo json_encode("Interes updated.");
     } else{
-        echo json_encode("Receta could not be updated");
+        echo json_encode("Interes could not be updated");
     }
 ?>

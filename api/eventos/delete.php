@@ -6,20 +6,20 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     
     include_once '../../config/database.php';
-    include_once '../../class/ingredientes.php';
+    include_once '../../class/eventos.php';
     
     $database = new Database();
     $db = $database->getConnection();
     
-    $ingrediente = new Ingrediente($db);
+    $evento = new Evento($db);
     
     $data = json_decode(file_get_contents("php://input"));
     
-    $ingrediente->id = $data->id;
+    $evento->id = $data->id;
 
-    if($ingrediente->deleteIngrediente()){
-        echo json_encode("Ingrediente deleted.");
+    if($evento->deleteEvento()){
+        echo json_encode("evento deleted.");
     } else{
-        echo json_encode("Ingrediente could not be deleted");
+        echo json_encode("evento could not be deleted");
     }
 ?>

@@ -6,27 +6,26 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     include_once '../../config/database.php';
-    include_once '../../class/ingredientes.php';
+    include_once '../../class/intereses.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $ingrediente = new Ingrediente($db);
+    $interes = new Interes($db);
 
-    $ingrediente->id = isset($_GET['id']) ? $_GET['id'] : die();
+    $interes->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    $ingrediente->getIngrediente();
+    $interes->getInteres();
 
-    if($ingrediente->nombre != null){
+    if($interes->interes != null){
         // create array
-        $ingrediente_detalles = array(
-            "id" => $ingrediente->id,
-            "nombre" => $ingrediente->nombre,
-            "imagen" => $ingrediente->imagen,
+        $interes_detalles = array(
+            "id" => $interes->id,
+            "interes" => $interes->interes,
         );
 
         http_response_code(200);
-        echo json_encode($ingrediente_detalles);
+        echo json_encode($interes_detalles);
     }
       
     else{

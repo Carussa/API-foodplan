@@ -4,24 +4,25 @@
     header("Access-Control-Allow-Methods: POST");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-    
+
     include_once '../../config/database.php';
-    include_once '../../class/ingredientes.php';
-    
+    include_once '../../class/intereses.php';
+
     $database = new Database();
     $db = $database->getConnection();
-    
-    $ingrediente = new Ingrediente($db);
-    
-    $data = json_decode(file_get_contents("php://input"));
-    
-    $ingrediente->id = $data->id;
-    $ingrediente->nombre = $data->nombre;
-    $ingrediente->imagen = $data->imagen;
 
-    if($ingrediente->updateIngrediente()){
-        echo json_encode("Ingrediente updated.");
-    } else{
-        echo json_encode("Ingrediente could not be updated");
+    $interes = new Interes($db);
+
+    $data = json_decode(file_get_contents("php://input"));
+
+    $interes->interes = $data->interes;
+    
+    if(!empty($interes->interes)){
+        if($interes->createInteres()){
+            echo 'Interes '. $interes->id . ' created successfully.' ;
+        } else{
+            echo 'Interes could not be created.';
+        }
     }
+    
 ?>

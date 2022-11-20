@@ -4,26 +4,25 @@
     header("Access-Control-Allow-Methods: POST");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-    
+
     include_once '../../config/database.php';
-    include_once '../../class/recetas.php';
-   // include_once '../../class/ingredientesreceta.php';
-    
+    include_once '../../class/intereses.php';
+
     $database = new Database();
     $db = $database->getConnection();
-    
-    $receta = new Receta($db);
-    
-    $data = json_decode(file_get_contents("php://input"));
-    
-    $receta->id = $data->id;
-    
-    //$ingredientes = new IngredienteReceta($db);
 
-    //if($receta->deleteReceta() && $ingredientes->removeIngredientes($receta->id)){
-    if($receta->deleteReceta() ){
-        echo json_encode("Receta deleted.");
-    } else{
-        echo json_encode("Receta could not be deleted");
+    $interes = new Interes($db);
+
+    $data = json_decode(file_get_contents("php://input"));
+
+    $interes->interes = $data->interes;
+    
+    if(!empty($interes->interes)){
+        if($interes->createInteres()){
+            echo 'Interes '. $interes->id . ' created successfully.' ;
+        } else{
+            echo 'Interes could not be created.';
+        }
     }
+    
 ?>

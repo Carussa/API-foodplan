@@ -26,11 +26,12 @@
             extract($fila);
             
             $receta = array(
-                "id" => $idusuario,
+                "id" => $id,
                 "nombre" => $nombre,
                 "email" => $email,
                 "rol" => $rol,
                 "estado" => $estado,
+                "fecha" => $fechaAcceso,
             );
 
             array_push($listaUsuarios["body"], $receta);

@@ -14,6 +14,7 @@
         public $pass;
         public $rol;
         public $estado;
+        public $fecha;
 
         // Db connection
         public function __construct($db){
@@ -22,7 +23,7 @@
 
         // GET ALL
         public function getUsuarios(){
-            $consulta = "SELECT idusuario, nombre, email, rol, estado FROM " . $this->db_table . "";
+            $consulta = "SELECT id, nombre, email, rol, estado, fechaAcceso FROM " . $this->db_table . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) > 0) {
@@ -32,7 +33,7 @@
 
          // GET ALL ACTIVE
          public function getActiveUsuarios(){
-            $consulta = "SELECT idusuario, nombre, email, rol FROM " . $this->db_table . " WHERE estado = 1";
+            $consulta = "SELECT id, nombre, email, rol, fechaAcceso FROM " . $this->db_table . " WHERE estado = 1";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) > 0) {
@@ -42,7 +43,7 @@
         
          // GET ALL INACTIVE
          public function getInactiveUsuarios(){
-            $consulta = "SELECT idusuario, nombre, email, rol FROM " . $this->db_table . " WHERE estado = 0";
+            $consulta = "SELECT id, nombre, email, rol, fechaAcceso FROM " . $this->db_table . " WHERE estado = 0";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) > 0) {
@@ -52,7 +53,7 @@
        
         // GET SINGLE
         public function getUsuario(){
-            $consulta = "SELECT nombre, email, pass, rol, estado FROM " . $this->db_table . " WHERE idusuario = " . $this->id . "";
+            $consulta = "SELECT nombre, email, pass, rol, estado, fechaAcceso FROM " . $this->db_table . " WHERE id = " . $this->id . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) == 1) {
@@ -103,7 +104,7 @@
         public function deleteUsuario(){
             $this->id = htmlspecialchars(strip_tags($this->id));
 
-            $consulta = "UPDATE ". $this->db_table ." SET estado = 0  WHERE idusuario = $this->id";
+            $consulta = "UPDATE ". $this->db_table ." SET estado = 0  WHERE id = $this->id";
             
             $resultado = mysqli_query($this->connection, $consulta);
             

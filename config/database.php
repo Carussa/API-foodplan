@@ -1,7 +1,7 @@
 <?php 
     class Database {
         private $host = "127.0.0.1";
-        private $dbname = "foodplan";
+        private $dbname = "socialevents";
         private $user = "root";
         private $password = "";
 

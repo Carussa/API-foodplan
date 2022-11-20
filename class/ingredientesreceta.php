@@ -49,6 +49,11 @@
             }
         }
 
+        // idea: pasar todos los ingredientes, si existe registro update, si no add.
+        // Además hay que comprobar si hay registros que no estén en el json y remove
+        public function addIngredienteReceta($receta){}
+        public function updateIngredienteReceta($receta){}
+
         //sin probar
         public function removeIngrediente($idreceta){
             $consulta = "DELETE FROM " . $this->db_table_IR . " WHERE idreceta = ". $idreceta. " AND idingrediente = " . $this->id . "";
