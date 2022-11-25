@@ -14,7 +14,9 @@
 
     $interesusuario = new InteresUsuario($db);
 
-    $intereses = $interesusuario->getIdInteresesUsuario(2);
+    $data = json_decode(file_get_contents("php://input"));
+
+    $intereses = $interesusuario->getIdInteresesUsuario($data);
     $itemCount = mysqli_num_rows($intereses);
 
 
@@ -58,6 +60,7 @@
             extract($fila);
             
             $evento = array(
+                "data" => $data,
                 "id" => $id,
                 "organizacion" => $nombre,
                 "titulo" => $titulo,

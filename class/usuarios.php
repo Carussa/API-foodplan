@@ -65,7 +65,23 @@
                 $this->rol = $usuario['rol'];
                 $this->estado = $usuario['estado'];
             }
-        }        
+        }       
+        
+        // GET login
+        public function isValid(){
+          $consulta = "SELECT COUNT(*) as total, id FROM " . $this->db_table . " WHERE email = '" . $this->email . "' AND pass =  '" . $this->pass ."'";
+             // $consulta = "SELECT COUNT(*) as total, id FROM " . $this->db_table . " WHERE email = 'mail@mail.com' AND pass = 'dsfcom'";
+            $resultado = mysqli_query($this->connection, $consulta);
+            $num_rows = mysqli_fetch_assoc($resultado);
+            
+            if ($num_rows['total'] == 1) {
+                $this->id = $num_rows['id'];
+                return true;
+              //  $this->getUsuario();
+            } else {
+               return false;
+            }
+        }       
 
         // UPDATE
         public function updateUsuario(){
