@@ -10,7 +10,9 @@
 
     $items = new evento($db);
 
-    $eventos = $items->getEventos();
+    $user = isset($_GET['us']) ? $_GET['us'] : die();
+
+    $eventos = $items->getEventos($user);
     $itemCount = mysqli_num_rows($eventos);
 
 
@@ -27,7 +29,7 @@
             
             $evento = array(
                 "id" => $id,
-                "organizacion" => $nombre,
+                "organizacion" => $organizacion,
                 "titulo" => $titulo,
                 //"descripcion" => $descripcion,
                 "imagen" => $imagen,
@@ -36,6 +38,7 @@
                 "provincia" => $provincia,
                 "fecharealizacion" => $fecharealizacion,
                 "interes" => $interes,
+                "favorito" => $favorito,
             );
 
             array_push($listaEventos["body"], $evento);

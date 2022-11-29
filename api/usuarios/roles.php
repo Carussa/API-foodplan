@@ -3,36 +3,36 @@
     header("Content-Type: application/json; charset=UTF-8");
     
     include_once '../../config/database.php';
-    include_once '../../class/intereses.php';
+    include_once '../../class/usuarios.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $items = new Interes($db);
+    $items = new Usuario($db);
 
-    $intereses = $items->getIntereses();
-    $itemCount = mysqli_num_rows($intereses);
+    $roles = $items->getRoles();
+    $itemCount = mysqli_num_rows($roles);
 
 
    // echo json_encode($itemCount);
 
     if($itemCount > 0){
         
-        $listaIntereses = array();
-        $listaIntereses["body"] = array();
-        $listaIntereses["itemCount"] = $itemCount;
+        $listaRoles = array();
+        $listaRoles["body"] = array();
+        $listaRoles["itemCount"] = $itemCount;
 
-        while ($fila = mysqli_fetch_assoc($intereses)){
+        while ($fila = mysqli_fetch_assoc($roles)){
             extract($fila);
             
-            $receta = array(
+            $rol = array(
                 "id" => $id,
-                "interes" => $interes,
+                "rol" => $rol,
             );
 
-            array_push($listaIntereses["body"], $receta);
+            array_push($listaRoles["body"], $rol);
         }
-        echo json_encode($listaIntereses);
+        echo json_encode($listaRoles);
     }
 
     else{

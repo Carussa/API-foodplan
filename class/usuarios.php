@@ -6,6 +6,9 @@
 
         // Table
         private $db_table = "usuarios";
+        private $db_table_aux = "roles";
+        private $db_table_aux_2 = "intereses_usuario";
+        private $db_table_aux_3 = "organizaciones";
 
         // Columns
         public $id;
@@ -15,6 +18,8 @@
         public $rol;
         public $estado;
         public $fecha;
+        public $intereses;
+        public $organizacion;
 
         // Db connection
         public function __construct($db){
@@ -31,29 +36,9 @@
             }
         }
 
-         // GET ALL ACTIVE
-         public function getActiveUsuarios(){
-            $consulta = "SELECT id, nombre, email, rol, fechaAcceso FROM " . $this->db_table . " WHERE estado = 1";
-            $resultado = mysqli_query($this->connection, $consulta);
-
-            if (mysqli_num_rows($resultado) > 0) {
-                return $resultado;
-            }
-        }      
-        
-         // GET ALL INACTIVE
-         public function getInactiveUsuarios(){
-            $consulta = "SELECT id, nombre, email, rol, fechaAcceso FROM " . $this->db_table . " WHERE estado = 0";
-            $resultado = mysqli_query($this->connection, $consulta);
-
-            if (mysqli_num_rows($resultado) > 0) {
-                return $resultado;
-            }
-        }      
-       
-        // GET SINGLE
+        // GET SINGLE - Hacer left join para traerme la organización
         public function getUsuario(){
-            $consulta = "SELECT nombre, email, pass, rol, estado, fechaAcceso FROM " . $this->db_table . " WHERE id = " . $this->id . "";
+            $consulta = "SELECT a.nombre, a.email, a.pass, a.rol, b.id as organizacion FROM " . $this->db_table . " a LEFT JOIN " . $this->db_table_aux_3 . " b ON b.idusuario = " . $this->id . " WHERE a.id = " . $this->id . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) == 1) {
@@ -63,7 +48,7 @@
                 $this->email = $usuario['email'];
                 $this->pass = $usuario['pass'];
                 $this->rol = $usuario['rol'];
-                $this->estado = $usuario['estado'];
+                $this->organizacion = $usuario['organizacion'];
             }
         }       
         
@@ -104,7 +89,6 @@
             $this->email = htmlspecialchars(strip_tags($this->email));
             $this->pass = htmlspecialchars(strip_tags($this->pass));
             $this->rol = htmlspecialchars(strip_tags($this->rol));
-            $this->estado = htmlspecialchars(strip_tags($this->estado));
 
             $consulta = "INSERT INTO ". $this->db_table ." (nombre, email, pass, rol, estado) VALUES ('$this->nombre', '$this->email', '$this->pass', '$this->rol', '$this->estado') ";
            
@@ -124,6 +108,32 @@
             
             $resultado = mysqli_query($this->connection, $consulta);
             
+            return $resultado;
+        }
+
+         // GET ROLES
+         public function getRoles(){
+            $consulta = "SELECT id, rol FROM  " . $this->db_table_aux . "";
+            $resultado = mysqli_query($this->connection, $consulta);
+
+            if (mysqli_num_rows($resultado) > 0) {
+                return $resultado;
+            }
+        }
+
+        // CREATE INTERESES USUARIO
+        public function createInteresesUsuario () {
+            $consulta = "INSERT INTO " . $this->db_table_aux_2 . "(IDusuario, IDinteres) VALUES";
+            foreach ($this->intereses as $key => $interes) {
+                    $consulta .= "( " . $this->id . ", " . $interes . " )";
+                    if ($key + 1 < count($this->intereses)) {
+                        $consulta .=  ",";
+                    }
+                }
+
+            echo $consulta;
+            $resultado = mysqli_query($this->connection, $consulta);
+
             return $resultado;
         }
     }

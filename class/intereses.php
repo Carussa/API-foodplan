@@ -18,7 +18,7 @@
 
         // GET ALL
         public function getIntereses(){
-            $consulta = "SELECT idinteres, interes FROM " . $this->db_table . "";
+            $consulta = "SELECT id, interes FROM " . $this->db_table . "";
             $resultado = mysqli_query($this->connection, $consulta);
 
             if (mysqli_num_rows($resultado) > 0) {

@@ -15,15 +15,22 @@
 
     $data = json_decode(file_get_contents("php://input"));
 
+    $usuario->id = 7;
     $usuario->nombre = $data->nombre;
     $usuario->email = $data->email;
     $usuario->pass = $data->pass;
+    $usuario->intereses = $data->intereses;
     $usuario->rol = 0;
     $usuario->estado = 1;
     
     if(!empty($usuario->nombre)){
         if($usuario->createUsuario()){
             echo 'Usuario '. $usuario->id . ' created successfully.' ;
+            if($usuario->createInteresesUsuario()){
+                echo "Intereses añadidos";
+            } else{
+                echo "No se han podido añadir los intereses";
+            }
         } else{
             echo 'Usuario could not be created.';
         }
