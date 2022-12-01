@@ -27,6 +27,7 @@
             "id" => $usuario->id,
             "nombre" => $usuario->nombre,
             "rol" => $usuario->rol,
+            "organizacion" => $usuario->organizacion,
         );
 
         http_response_code(200);

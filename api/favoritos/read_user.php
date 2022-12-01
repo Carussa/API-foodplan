@@ -6,46 +6,44 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     
     include_once '../../config/database.php';
-    include_once '../../class/eventos.php';
-    include_once '../../class/interesesusuario.php';
+    include_once '../../class/favoritos.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $interesusuario = new InteresUsuario($db);
-
     $user = isset($_GET['us']) ? $_GET['us'] : die();
 
-    $items = new evento($db);
+    $items = new favorito($db);
   
-    $eventos = $items->getEventosUsuario($user);
-    $itemCount = mysqli_num_rows($eventos);
+    $favoritos = $items->getFavoritosUsuario($user);
+    $itemCount = mysqli_num_rows($favoritos);
 
 
    // echo json_encode($itemCount);
 
     if($itemCount > 0){
         
-        $listaEventos = array();
-        $listaEventos["body"] = array();
-        $listaEventos["itemCount"] = $itemCount;
+        $listaFavoritos = array();
+        $listaFavoritos["body"] = array();
+        $listaFavoritos["itemCount"] = $itemCount;
 
-        while ($fila = mysqli_fetch_assoc($eventos)){
+        while ($fila = mysqli_fetch_assoc($favoritos)){
             extract($fila);
             
-            $evento = array(
-                "id" => $id,
-                "organizacion" => $idorganizacion,
+            $favorito = array(
+                "id" => $idevento,
+                "organizacion" => $organizacion,
                 "titulo" => $titulo,
                 //"descripcion" => $descripcion,
                 "imagen" => $imagen,
                // "telefono" => $telefono,
                 //"direccion" => $direccion,
+                
             );
 
-            array_push($listaEventos["body"], $evento);
+            array_push($listaFavoritos["body"], $favorito);
         }
-        echo json_encode($listaEventos);
+        echo json_encode($listaFavoritos);
     }
 
     else{

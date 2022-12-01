@@ -51,12 +51,37 @@
             }
         }
 
-        // GET ALL USUARIO
-        public function getEventosUsuario($intereses){
+        // GET ALL FROM USER
+        public function getEventosUsuario($user){
+            
+            $consulta = "SELECT a.id, a.titulo, a.imagen, b.id as idorganizacion
+            FROM " . $this->db_table. " a 
+            INNER JOIN " . $this->db_table_aux3. " b ON  b.idusuario = " . $user . "
+            WHERE a.idorganizacion = b.id
+            ORDER BY a.id ";
+        
+            //$consulta = "SELECT a.id, a.titulo, a.imagen, a.fecharealizacion, b.provincia FROM " . $this->db_table. " a INNER JOIN " . $this->db_table_aux. " b ON a.idprovincia = b.id";
+            
+            $resultado = mysqli_query($this->connection, $consulta);
+
+            if (mysqli_num_rows($resultado) > 0) {
+                return $resultado;
+            }
+        }
+
+        // GET ALL FROM USER INTEREST
+        public function getEventosIntereses($intereses, $user){
            
             $intereses = implode(',' , $intereses);
             
-            $consulta = "SELECT a.id, a.titulo, a.imagen, a.fecharealizacion, b.provincia, c.interes, d.nombre FROM " . $this->db_table. " a INNER JOIN " . $this->db_table_aux. " b INNER JOIN " . $this->db_table_aux2. " c INNER JOIN " . $this->db_table_aux3. " d ON a.idprovincia = b.id AND a.idinteres = c.id AND a.idorganizacion = d.id WHERE a.idinteres IN (" . $intereses . ")";
+            $consulta = "SELECT a.id, a.titulo, a.imagen, a.fecharealizacion, b.provincia, c.interes, d.organizacion, e.idusuario as favorito
+            FROM " . $this->db_table. " a 
+            INNER JOIN " . $this->db_table_aux. " b ON a.idprovincia = b.id
+            INNER JOIN " . $this->db_table_aux2. " c ON a.idinteres = c.id
+            INNER JOIN " . $this->db_table_aux3. " d ON a.idorganizacion = d.id 
+            LEFT JOIN ". $this->db_table_aux4 . " e ON e.idusuario = ". $user . " AND a.id = e.idevento 
+            WHERE a.idinteres IN (" . $intereses . ") 
+            ORDER BY a.id ";
            
             //$consulta = "SELECT a.id, a.titulo, a.imagen, a.fecharealizacion, b.provincia FROM " . $this->db_table. " a INNER JOIN " . $this->db_table_aux. " b ON a.idprovincia = b.id";
             

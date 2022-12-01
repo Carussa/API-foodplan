@@ -16,9 +16,34 @@
 
     $user = isset($_GET['us']) ? $_GET['us'] : die();
 
+    $intereses = $interesusuario->getIdInteresesUsuario($user);
+    $itemCount = mysqli_num_rows($intereses);
+
+
+   // echo json_encode($itemCount);
+
+    if($itemCount > 0){
+        
+        $listaIntereses = array();
+
+        while ($fila = mysqli_fetch_assoc($intereses)){
+            extract($fila);
+
+            $listaIntereses[] += $idinteres;
+            //array_push($listaIntereses, $idinteres);
+        }
+    }
+
+    else{
+        http_response_code(404);
+        echo json_encode(
+            array("message" => "No record found.")
+        );
+    }
+
     $items = new evento($db);
   
-    $eventos = $items->getEventosUsuario($user);
+    $eventos = $items->getEventosIntereses($listaIntereses, $user);
     $itemCount = mysqli_num_rows($eventos);
 
 
@@ -33,14 +58,24 @@
         while ($fila = mysqli_fetch_assoc($eventos)){
             extract($fila);
             
+            if(isset($favorito)) {
+                $favorito = true;
+            }else {
+                $favorito = false;
+            }
+
             $evento = array(
                 "id" => $id,
-                "organizacion" => $idorganizacion,
+                "organizacion" => $organizacion,
                 "titulo" => $titulo,
                 //"descripcion" => $descripcion,
                 "imagen" => $imagen,
                // "telefono" => $telefono,
                 //"direccion" => $direccion,
+                "provincia" => $provincia,
+                "fecharealizacion" => $fecharealizacion,
+                "interes" => $interes,
+                "favorito" => $favorito
             );
 
             array_push($listaEventos["body"], $evento);
