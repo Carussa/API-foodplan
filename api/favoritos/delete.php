@@ -6,20 +6,21 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     
     include_once '../../config/database.php';
-    include_once '../../class/eventos.php';
+    include_once '../../class/favoritos.php';
     
     $database = new Database();
     $db = $database->getConnection();
     
-    $evento = new Evento($db);
+    $fav = new Favorito($db);
     
     $data = json_decode(file_get_contents("php://input"));
     
-    $evento->id = $data->id;
+    $fav->idevento = $data->idevento;
+    $fav->idusuario = $data->idusuario;
 
-    if($evento->deleteEvento()){
-        echo json_encode("evento deleted.");
+    if($fav->deleteFavorito()){
+        echo json_encode("Fav deleted.");
     } else{
-        echo json_encode("evento could not be deleted");
+        echo json_encode("Fav could not be deleted");
     }
 ?>

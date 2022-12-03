@@ -12,11 +12,6 @@
         // Columns
         public $idusuario;
         public $idevento;
-        public $organizacion;
-        public $titulo;
-        public $imagen;
-        public $interes;
-        public $fecharealizacion;
 
         // Db connection
         public function __construct($db){
@@ -45,15 +40,10 @@
         // CREATE
         public function createFavorito(){
             // sanitize
-            $this->titulo = htmlspecialchars(strip_tags($this->titulo));
-            $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
-            $this->imagen = htmlspecialchars(strip_tags($this->imagen));
-            $this->direccion = htmlspecialchars(strip_tags($this->direccion));
-            $this->idprovincia = htmlspecialchars(strip_tags($this->idprovincia));
-            $this->idorganizacion = htmlspecialchars(strip_tags($this->idorganizacion));
-            $this->idinteres= htmlspecialchars(strip_tags($this->idinteres));
+            $this->idevento = htmlspecialchars(strip_tags($this->idevento));
+            $this->idusuario = htmlspecialchars(strip_tags($this->idusuario));
 
-            $consulta = "INSERT INTO ". $this->db_table ." (idorganizacion, titulo, descripcion, imagen, direccion, idprovincia, idinteres) VALUES ('$this->idorganizacion', '$this->titulo', '$this->descripcion', '$this->imagen', '$this->direccion', '$this->idprovincia', '$this->idinteres') ";
+            $consulta = "INSERT INTO ". $this->db_table ." (idevento, idusuario) VALUES ('$this->idevento', '$this->idusuario') ";
            
             $resultado = mysqli_query($this->connection, $consulta);
 
@@ -67,7 +57,7 @@
         public function deleteFavorito(){
             $this->id = htmlspecialchars(strip_tags($this->id));
 
-            $consulta = "DELETE FROM " . $this->db_table . " WHERE id = $this->id";
+            $consulta = "DELETE FROM " . $this->db_table . " WHERE idevento = $this->idevento AND idusuario = $this->idusuario";
             
             $resultado = mysqli_query($this->connection, $consulta);
             

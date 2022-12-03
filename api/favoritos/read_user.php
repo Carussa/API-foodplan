@@ -34,11 +34,7 @@
                 "id" => $idevento,
                 "organizacion" => $organizacion,
                 "titulo" => $titulo,
-                //"descripcion" => $descripcion,
-                "imagen" => $imagen,
-               // "telefono" => $telefono,
-                //"direccion" => $direccion,
-                
+                "favorito" => true,
             );
 
             array_push($listaFavoritos["body"], $favorito);

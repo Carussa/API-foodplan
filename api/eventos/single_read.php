@@ -21,14 +21,16 @@
         // create array
         $evento_detalles = array(
             "id" => $evento->id,
-            "titulo" => $evento->titulo,
-            "descripcion" => $evento->descripcion,
-            "imagen" => $evento->imagen,
-            "direccion" => $evento->direccion,
-            "provincia" => $evento->provincia,
+            "title" => $evento->titulo,
+            "description" => $evento->descripcion,
+            "address" => $evento->direccion,
+            "idprovince" => $evento->idprovincia,
+            "province" => $evento->provincia,
             "idorganizacion" => $evento->idorganizacion,
             "organizacion" => $evento->organizacion,
-            "interes" => $evento->interes
+            "idinterest" => $evento->idinteres,
+            "interest" => $evento->interes,
+            "date" => $evento->fecharealizacion
         );
 
         http_response_code(200);

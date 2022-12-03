@@ -32,7 +32,6 @@
                 "organizacion" => $organizacion,
                 "titulo" => $titulo,
                 //"descripcion" => $descripcion,
-                "imagen" => $imagen,
                // "telefono" => $telefono,
                 //"direccion" => $direccion,
                 "provincia" => $provincia,

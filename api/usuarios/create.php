@@ -15,13 +15,11 @@
 
     $data = json_decode(file_get_contents("php://input"));
 
-    $usuario->id = 7;
     $usuario->nombre = $data->nombre;
     $usuario->email = $data->email;
     $usuario->pass = $data->pass;
     $usuario->intereses = $data->intereses;
-    $usuario->rol = 0;
-    $usuario->estado = 1;
+    $usuario->rol = $data->rol;
     
     if(!empty($usuario->nombre)){
         if($usuario->createUsuario()){

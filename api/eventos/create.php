@@ -17,11 +17,11 @@
 
     $evento->titulo = $data->titulo;
     $evento->descripcion = $data->descripcion;
-    $evento->imagen = $data->imagen;
     $evento->direccion = $data->direccion;
     $evento->idprovincia = $data->idprovincia;
     $evento->idinteres = $data->idinteres;
     $evento->idorganizacion = $data->idorganizacion;
+    $evento->fecharealizacion = $data->fecha;
     
     if(!empty($evento->titulo)){
         if($evento->createEvento()){

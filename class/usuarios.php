@@ -90,7 +90,7 @@
             $this->pass = htmlspecialchars(strip_tags($this->pass));
             $this->rol = htmlspecialchars(strip_tags($this->rol));
 
-            $consulta = "INSERT INTO ". $this->db_table ." (nombre, email, pass, rol, estado) VALUES ('$this->nombre', '$this->email', '$this->pass', '$this->rol', '$this->estado') ";
+            $consulta = "INSERT INTO ". $this->db_table ." (nombre, email, pass, rol) VALUES ('$this->nombre', '$this->email', '$this->pass', '$this->rol') ";
            
             $resultado = mysqli_query($this->connection, $consulta);
 

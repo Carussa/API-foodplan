@@ -6,28 +6,23 @@
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     include_once '../../config/database.php';
-    include_once '../../class/eventos.php';
+    include_once '../../class/favoritos.php';
 
     $database = new Database();
     $db = $database->getConnection();
 
-    $evento = new Evento($db);
+    $fav = new Favorito($db);
 
     $data = json_decode(file_get_contents("php://input"));
 
-    $evento->titulo = $data->titulo;
-    $evento->descripcion = $data->descripcion;
-    $evento->imagen = $data->imagen;
-    $evento->direccion = $data->direccion;
-    $evento->idprovincia = $data->idprovincia;
-    $evento->idinteres = $data->idinteres;
-    $evento->idorganizacion = $data->idorganizacion;
+    $fav->idevento = $data->idevento;
+    $fav->idusuario = $data->idusuario;
     
-    if(!empty($evento->titulo)){
-        if($evento->createEvento()){
-            echo 'evento '. $evento->id . ' created successfully.' ;
+    if(!empty($fav->idevento)){
+        if($fav->createFavorito()){
+            echo 'favorito '. $evento->id . ' created successfully.' ;
         } else{
-            echo 'evento could not be created.';
+            echo 'favorito could not be created.';
         }
     }
     

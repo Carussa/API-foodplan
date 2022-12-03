@@ -37,8 +37,9 @@
                 "id" => $id,
                 "organizacion" => $idorganizacion,
                 "titulo" => $titulo,
+                "interes" => $interes,
                 //"descripcion" => $descripcion,
-                "imagen" => $imagen,
+                //"imagen" => $imagen,
                // "telefono" => $telefono,
                 //"direccion" => $direccion,
             );
